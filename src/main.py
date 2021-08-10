@@ -57,7 +57,7 @@ def get_planets():
     query_planets = list(map(lambda x: x.serialize(), query_planets ))
     print(query_planets)
     response_body = {
-        "msg": "Hello, this is your GET /people response",
+        "msg": "Hello, this is your GET /planets response",
         "planets_list": query_planets
     }
     return jsonify(response_body), 200
