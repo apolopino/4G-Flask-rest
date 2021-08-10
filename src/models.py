@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
@@ -6,13 +7,14 @@ class People(db.Model):
 	__tablename__ = 'people'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(120), unique=True, nullable=False)
-	planets = db.relationship('Planets', lazy=True)
+	planet = db.relationship('Planets', lazy=True)
+
 
 	def serialize(self):
 		return {
 			"id": self.id,
 			"name": self.name,
-			"planets_list": self.planets
+			"planet": self.planet
 		}
 
 class Planets(db.Model):
@@ -20,6 +22,7 @@ class Planets(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name= db.Column(db.String(120), unique=True, nullable=False)
 	people_id = db.Column(db.Integer, db.ForeignKey('people.id'))
+	people = relationship(People)
 
 	def __repr__(self):
 		return self.name
